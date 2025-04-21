@@ -16,7 +16,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: https://github.com/YOUR_USERNAME/argocd-applicationset-kustomize.git
+        repoURL: https://github.com/BBrucelee2002/argocd-applicationset-kustomize.git
         targetRevision: HEAD
         path: overlays/{{env}}
         directory:
