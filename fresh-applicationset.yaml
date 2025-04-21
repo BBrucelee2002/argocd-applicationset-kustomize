@@ -5,28 +5,26 @@ metadata:
   namespace: argocd
 spec:
   generators:
-    - list:
-        elements:
-          - env: dev
-          - env: staging
-          - env: prod
+  - list:
+      elements:
+      - env: dev
+      - env: staging
+      - env: prod
   template:
     metadata:
-      name: nginx-{{env}}
+      name: 'nginx-{{env}}'
     spec:
       project: default
       source:
         repoURL: https://github.com/BBrucelee2002/argocd-applicationset-kustomize.git
         targetRevision: HEAD
         path: overlays/{{env}}
-        directory:
-          recurse: true
       destination:
         server: https://kubernetes.default.svc
-        namespace: {{env}}
+        namespace: '{{env}}'
       syncPolicy:
         automated:
           prune: true
           selfHeal: true
         syncOptions:
-          - CreateNamespace=true
+        - CreateNamespace=true

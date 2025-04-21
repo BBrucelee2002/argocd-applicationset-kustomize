@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: test-set
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - name: dev
+  template:
+    metadata:
+      name: 'test-{{name}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/BBrucelee2002/argocd-applicationset-kustomize.git
+        targetRevision: HEAD
+        path: base
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: default
