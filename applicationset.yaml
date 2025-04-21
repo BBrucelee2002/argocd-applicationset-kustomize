@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: nginx-envs-kustomize
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - env: dev
+          - env: staging
+          - env: prod
+  template:
+    metadata:
+      name: nginx-{{env}}
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/YOUR_USERNAME/argocd-applicationset-kustomize.git
+        targetRevision: HEAD
+        path: overlays/{{env}}
+        directory:
+          recurse: true
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: {{env}}
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

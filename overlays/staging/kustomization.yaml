@@ -1,0 +1,6 @@
+namePrefix: staging-
+namespace: staging
+resources:
+  - ../../base
+patchesStrategicMerge:
+  - patch.yaml
